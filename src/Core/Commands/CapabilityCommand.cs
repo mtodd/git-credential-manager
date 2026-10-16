@@ -60,6 +60,11 @@ public class CapabilityCommand : Command
             _context.Streams.Out.WriteLine($"capability {name}");
         }
 
+        if (_context.Environment.Variables.ContainsKey(DpopDemo.DpopDemoCommand.ConfigVariable))
+        {
+            _context.Streams.Out.WriteLine($"capability {DpopDemo.DpopDemoProtocol.DpopCapability}");
+        }
+
         _context.Trace.WriteLine("End 'capability' command...");
     }
 }

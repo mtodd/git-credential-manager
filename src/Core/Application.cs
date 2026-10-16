@@ -98,6 +98,10 @@ namespace GitCredentialManager
                 rootCommand.AddCommand(new GetCommand(Context, _providerRegistry));
                 rootCommand.AddCommand(new StoreCommand(Context, _providerRegistry));
                 rootCommand.AddCommand(new EraseCommand(Context, _providerRegistry));
+                if (Context.Environment.Variables.TryGetValue(DpopDemo.DpopDemoCommand.ConfigVariable, out string demoConfig))
+                {
+                    rootCommand.AddCommand(new DpopDemo.DpopDemoObserveCommand(Context, demoConfig));
+                }
                 rootCommand.AddCommand(new CapabilityCommand(Context));
                 rootCommand.AddCommand(new ConfigureCommand(Context, _configurationService));
                 rootCommand.AddCommand(new UnconfigureCommand(Context, _configurationService));

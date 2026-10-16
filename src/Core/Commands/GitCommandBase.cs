@@ -34,6 +34,14 @@ namespace GitCredentialManager.Commands
 
             Context.Trace.WriteLine($"Start '{Name}' command...");
 
+            // The demo has a separate, non-logging protocol path. Never fall back
+            // to normal providers or credential stores when it is explicitly selected.
+            if (Context.Environment.Variables.TryGetValue(DpopDemo.DpopDemoCommand.ConfigVariable, out string demoConfig))
+            {
+                DpopDemo.DpopDemoCommand.Execute(Context, Name, demoConfig);
+                return;
+            }
+
             // Parse standard input arguments
             IDictionary<string, IList<string>> inputDict;
             using (Trace2.StartRegion("git_cmd", "parse_input"))
